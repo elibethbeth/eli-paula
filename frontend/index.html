@@ -1,39 +1,669 @@
-<!doctype html>
-<html lang="ca">
+
+<!DOCTYPE html>
+<html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ReservaFàcil · Esquelet</title>
-  <link rel="stylesheet" href="/css/styles.css">
-  <script type="module" src="/js/app.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080d14">
+<title>Vázquez Taller</title>
+
+<style>
+:root {
+  --bg:#080d14;
+  --panel:#111a27;
+  --panel2:#172231;
+  --line:#263346;
+  --text:#edf2f8;
+  --muted:#98a6b8;
+  --red:#e52e35;
+}
+
+* {
+  box-sizing:border-box;
+}
+
+html {
+  scroll-behavior:smooth;
+}
+
+body {
+  margin:0;
+  background:radial-gradient(ellipse at 50% -20%,#1a2636 0,transparent 55%),var(--bg);
+  color:var(--text);
+  font:14px/1.5 Inter,system-ui,sans-serif;
+}
+
+a {
+  color:inherit;
+  text-decoration:none;
+}
+
+.wrap {
+  width:min(1180px,calc(100% - 34px));
+  margin:auto;
+}
+
+header {
+  height:62px;
+  border-bottom:1px solid #202b3a;
+  background:#080d14ed;
+  display:flex;
+  align-items:center;
+  position:sticky;
+  top:0;
+  z-index:5;
+  backdrop-filter:blur(12px);
+}
+
+.top {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.brand {
+  font-weight:900;
+  font-size:19px;
+}
+
+.brand span {
+  color:var(--red);
+}
+
+nav {
+  display:flex;
+  align-items:center;
+  gap:24px;
+  color:#bdc7d4;
+  font-size:12px;
+}
+
+nav a:hover {
+  color:white;
+}
+
+.nav-cta,.btn {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid var(--red);
+  background:var(--red);
+  color:white;
+  border-radius:5px;
+  padding:9px 16px;
+  font-weight:700;
+  font-size:12px;
+  cursor:pointer;
+}
+
+.nav-cta {
+  padding:7px 13px;
+}
+
+.hero {
+  min-height:270px;
+  display:grid;
+  grid-template-columns:1fr 1.12fr;
+  gap:36px;
+  align-items:center;
+  padding:30px 4.5%;
+  position:relative;
+  overflow:hidden;
+}
+
+.hero:before,.hero:after {
+  content:"";
+  position:absolute;
+  top:0;
+  bottom:0;
+  width:90px;
+  opacity:.35;
+  pointer-events:none;
+  background:repeating-linear-gradient(
+    135deg,
+    transparent 0 17px,
+    #9e2028 18px 27px,
+    transparent 28px 44px
+  );
+}
+
+.hero:before { left:-66px; }
+.hero:after { right:-66px; }
+
+.eyebrow {
+  color:#f0444a;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:1.2px;
+  text-transform:uppercase;
+}
+
+h1 {
+  font-size:clamp(28px,4vw,43px);
+  line-height:1.05;
+  margin:7px 0 12px;
+}
+
+.intro {
+  max-width:430px;
+  color:#b3bfce;
+  font-size:13px;
+  margin:0 0 19px;
+}
+
+.actions {
+  display:flex;
+  gap:10px;
+}
+
+.btn.secondary {
+  background:#172231;
+  border-color:#344256;
+}
+
+.hero-photo {
+  height:205px;
+  border:1px solid #34465e;
+  border-radius:7px;
+  overflow:hidden;
+  box-shadow:0 14px 40px #0008;
+}
+
+.hero-photo img {
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:cover;
+}
+
+main {
+  padding-bottom:26px;
+}
+
+.columns {
+  display:grid;
+  grid-template-columns:1.05fr 1fr;
+  gap:14px;
+  align-items:start;
+}
+
+.left-stack {
+  display:grid;
+  gap:14px;
+}
+
+.panel {
+  background:linear-gradient(145deg,#111a27,#0e1621);
+  border:1px solid var(--line);
+  border-radius:7px;
+  padding:16px;
+  box-shadow:0 8px 24px #0002;
+}
+
+h2 {
+  margin:0 0 13px;
+  font-size:17px;
+}
+
+h2:after {
+  content:"";
+  display:block;
+  width:24px;
+  height:2px;
+  background:var(--red);
+  margin-top:7px;
+}
+
+.services {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:9px;
+}
+
+.service {
+  min-height:84px;
+  padding:11px;
+  background:var(--panel2);
+  border:1px solid #283649;
+  border-radius:5px;
+  transition:.2s;
+}
+
+.service:hover {
+  border-color:var(--red);
+  transform:translateY(-2px);
+}
+
+.service .ico {
+  color:var(--red);
+  font-size:18px;
+  margin-bottom:8px;
+}
+
+.service strong {
+  display:block;
+  font-size:11px;
+  margin-bottom:3px;
+}
+
+.service small {
+  display:block;
+  color:var(--muted);
+  font-size:9px;
+  line-height:1.4;
+}
+
+form {
+  display:grid;
+  gap:9px;
+}
+
+.form-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+}
+
+label {
+  display:grid;
+  gap:4px;
+  color:#c6d0dc;
+  font-size:10px;
+  font-weight:650;
+}
+
+input,select,textarea {
+  width:100%;
+  min-width:0;
+  border:1px solid #2a394c;
+  background:#182332;
+  color:#eef3f8;
+  border-radius:4px;
+  padding:9px 10px;
+  font:inherit;
+  font-size:11px;
+  outline:none;
+}
+
+input:focus,select:focus,textarea:focus {
+  border-color:#d83a40;
+  box-shadow:0 0 0 2px #d83a4020;
+}
+
+input::placeholder,textarea::placeholder {
+  color:#748398;
+}
+
+textarea {
+  min-height:55px;
+  resize:vertical;
+}
+
+.full {
+  grid-column:1/-1;
+}
+
+.booking .btn {
+  justify-self:start;
+}
+
+.status {
+  min-height:14px;
+  margin:0;
+  color:#aebccc;
+  font-size:10px;
+}
+
+.assistant textarea {
+  min-height:118px;
+}
+
+.contact {
+  margin-top:13px;
+}
+
+.contact-cards {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+}
+
+.contact-card {
+  border:1px solid #29374a;
+  background:#172231;
+  border-radius:5px;
+  padding:10px;
+  min-width:0;
+}
+
+.contact-card b {
+  display:block;
+  font-size:10px;
+  margin-bottom:4px;
+}
+
+.contact-card span {
+  color:#aab7c7;
+  font-size:9px;
+  overflow-wrap:anywhere;
+}
+
+footer {
+  text-align:center;
+  color:#718096;
+  font-size:9px;
+  padding:10px 0 18px;
+  border-top:1px solid #1c2837;
+}
+
+@media(max-width:760px) {
+  .hero {
+    grid-template-columns:1fr;
+    gap:18px;
+    padding:28px 3%;
+  }
+
+  .hero-photo {
+    height:190px;
+  }
+
+  .columns {
+    grid-template-columns:1fr;
+  }
+
+  nav {
+    gap:12px;
+  }
+}
+
+@media(max-width:480px) {
+  .wrap {
+    width:calc(100% - 22px);
+  }
+
+  header {
+    height:auto;
+    padding:12px 0;
+  }
+
+  .top {
+    align-items:flex-start;
+    flex-direction:column;
+    gap:9px;
+  }
+
+  nav {
+    width:100%;
+    justify-content:space-between;
+    font-size:11px;
+  }
+
+  .services {
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .form-grid {
+    grid-template-columns:1fr;
+  }
+
+  .full {
+    grid-column:auto;
+  }
+
+  .contact-cards {
+    grid-template-columns:1fr;
+  }
+}
+</style>
+
+<script type="module" src="/js/app.js"></script>
 </head>
+
 <body>
-  <!-- TODO F1/F4: identitat, servei, horaris i condicions coherents amb config.js. -->
-  <header><h1>ReservaFàcil</h1><p>TODO: presentació del negoci.</p>
-    <nav><a href="#reserva">Reservar</a> · <a href="#assistent">Assistent</a> · <a href="/gestion/">Gestió</a></nav>
-  </header>
-  <main>
-    <section id="reserva">
-      <h2>Reserva una taula</h2>
-      <form id="booking-form">
-        <label>Nom <input name="name" required minlength="2" maxlength="100"></label>
-        <label>Data <input name="date" type="date" required></label>
-        <label>Hora <select name="time" required disabled><option value="">Consulta una data</option></select></label>
-        <label>Comensals <input name="diners" type="number" min="1" max="8" required></label>
-        <button type="submit">Reservar</button>
-      </form>
-      <p id="booking-status" role="status">TODO F4: connectar el formulari.</p>
-    </section>
-    <section id="assistent">
-      <h2>Assistent</h2>
-      <div id="messages" role="log" aria-live="polite"><p>TODO F5: missatge de benvinguda.</p></div>
-      <form id="chat-form">
-        <label>Missatge <input name="message" maxlength="500" required></label>
-        <button type="submit">Enviar</button>
-      </form>
-      <p id="chat-status" role="status"></p>
-    </section>
-    <section><h2>Condicions</h2><p>TODO F1: una taula, durada, capacitat, dies i hores. Dades fictícies.</p></section>
-  </main>
+
+<header>
+  <div class="wrap top">
+    <a class="brand" href="#">VÁZQUEZ <span>TALLER</span></a>
+
+    <nav>
+      <a href="#inicio">Inicio</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#reserva">Reservar cita</a>
+      <a class="nav-cta" href="/gestion/">Taller</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap" id="inicio">
+
+  <section class="hero">
+
+    <div>
+      <div class="eyebrow">Taller de barrio</div>
+
+      <h1>Vázquez Taller</h1>
+
+      <p class="intro">
+        Un taller familiar para cuidar y reparar tu coche
+        con un trato cercano y de confianza.
+      </p>
+
+      <div class="actions">
+        <a class="btn" href="#reserva">Pedir cita</a>
+        <a class="btn secondary" href="#contacto">Contactar</a>
+      </div>
+    </div>
+
+    <div class="hero-photo">
+      <img src="/img/taller.jpg" alt="Entrada del taller mecánico">
+    </div>
+
+  </section>
+
+  <div class="columns">
+
+    <div class="left-stack">
+
+      <section class="panel" id="servicios">
+
+        <h2>Nuestros servicios</h2>
+
+        <div class="services">
+
+          <article class="service">
+            <div class="ico">🔧</div>
+            <strong>Mecánica general</strong>
+            <small>Revisión y reparación de averías habituales.</small>
+          </article>
+
+          <article class="service">
+            <div class="ico">ϟ</div>
+            <strong>Electricidad</strong>
+            <small>Baterías, luces y componentes eléctricos.</small>
+          </article>
+
+          <article class="service">
+            <div class="ico">◉</div>
+            <strong>Diagnóstico</strong>
+            <small>Detección de fallos con equipo de diagnosis.</small>
+          </article>
+
+          <article class="service">
+            <div class="ico">◯</div>
+            <strong>Neumáticos</strong>
+            <small>Revisión, equilibrado y sustitución.</small>
+          </article>
+
+          <article class="service">
+            <div class="ico">◎</div>
+            <strong>Frenos</strong>
+            <small>Comprobación y mantenimiento del sistema de frenado.</small>
+          </article>
+
+          <article class="service">
+            <div class="ico">❖</div>
+            <strong>Aire acondicionado</strong>
+            <small>Revisión y recarga del climatizador.</small>
+          </article>
+
+        </div>
+      </section>
+
+      <section class="panel assistant" id="assistent">
+
+        <h2>Taller IA</h2>
+
+        <form id="chat-form">
+
+          <label class="full" for="chat-message">
+            <textarea
+              id="chat-message"
+              name="message"
+              maxlength="500"
+              required
+              placeholder="Escribe aquí tu mensaje..."
+            ></textarea>
+          </label>
+
+          <button class="btn" type="submit">
+            Enviar mensaje
+          </button>
+
+        </form>
+
+        <div id="messages" role="log" aria-live="polite">
+          <p class="status">
+            Cuéntanos qué le ocurre a tu vehículo y te ayudaremos.
+          </p>
+        </div>
+
+        <p id="chat-status" class="status" role="status"></p>
+
+      </section>
+
+    </div>
+
+    <div>
+
+      <section class="panel booking" id="reserva">
+
+        <h2>Reservar una cita</h2>
+
+        <form id="booking-form">
+
+          <div class="form-grid">
+
+            <label>
+              Nombre y apellidos
+              <input name="name" required minlength="2"
+                maxlength="100" placeholder="Tu nombre">
+            </label>
+
+            <label>
+              Teléfono
+              <input name="phone" type="tel"
+                placeholder="Tu teléfono">
+            </label>
+
+            <label class="full">
+              Servicio que necesitas
+              <select name="service" required>
+                <option value="">Selecciona un servicio</option>
+                <option>Mecánica general</option>
+                <option>Electricidad</option>
+                <option>Diagnóstico</option>
+                <option>Neumáticos</option>
+                <option>Frenos</option>
+                <option>Aire acondicionado</option>
+                <option>Otro</option>
+              </select>
+            </label>
+
+            <label>
+              Fecha
+              <input name="date" type="date" required>
+            </label>
+
+            <label>
+              Hora
+              <select name="time" required disabled>
+                <option value="">Consulta una fecha</option>
+              </select>
+            </label>
+
+            <label>
+              Modelo del vehículo
+              <input name="vehicle" placeholder="Marca y modelo">
+            </label>
+
+            <label>
+              Matrícula
+              <input name="plate" placeholder="0000 ABC">
+            </label>
+
+            <label class="full">
+              Descripción del problema
+              <textarea name="description"
+                placeholder="Describe brevemente qué le ocurre al vehículo..."></textarea>
+            </label>
+
+            <label class="full">
+              Observaciones adicionales
+              <textarea name="notes"
+                placeholder="Otros detalles que debamos conocer..."></textarea>
+            </label>
+
+            <input type="hidden" name="diners" value="1">
+
+          </div>
+
+          <button class="btn" type="submit">
+            Solicitar cita
+          </button>
+
+          <p id="booking-status" class="status" role="status"></p>
+
+        </form>
+
+      </section>
+
+      <section class="panel contact" id="contacto">
+
+        <h2>Contacto</h2>
+
+        <div class="contact-cards">
+
+          <div class="contact-card">
+            <b>☎ Teléfono</b>
+            <span>Consulta telefónicamente</span>
+          </div>
+
+          <div class="contact-card">
+            <b>✉ Email</b>
+            <span>Contacta con nuestro taller</span>
+          </div>
+
+          <div class="contact-card">
+            <b>◷ Horario</b>
+            <span>Lun–Vie · 09:00–18:00</span>
+          </div>
+
+        </div>
+
+      </section>
+
+    </div>
+
+  </div>
+
+</main>
+
+<footer>
+  <strong>Vázquez Taller</strong>
+  <br>
+  Tu taller de confianza · Atención cercana y profesional
+</footer>
+
 </body>
 </html>
