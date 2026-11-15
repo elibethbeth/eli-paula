@@ -1,0 +1,216 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Taller Vázquez. Reparación y mantenimiento de vehículos.">
+  <title>Taller Vázquez | Tu taller de confianza</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <script type="module" src="/js/app.js"></script>
+</head>
+<body>
+
+<header class="header">
+  <div class="container navbar">
+    <a href="#inicio" class="logo">VÁZQUEZ <span>TALLER</span></a>
+    <nav class="nav-links">
+      <a href="#inicio">Inicio</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#reserva">Reservar cita</a>
+      <a href="#asistente" class="nav-highlight">Taller IA</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="container hero" id="inicio">
+    <div class="hero-content">
+      <span class="eyebrow">TALLER MECÁNICO · SERVICIO DE CONFIANZA</span>
+      <h1>Tu coche en buenas manos.</h1>
+      <p>En Taller Vázquez cuidamos de tu vehículo con un trato cercano, profesional y de confianza.</p>
+      <div class="hero-buttons">
+        <a href="#reserva" class="btn">RESERVAR CITA</a>
+        <a href="#servicios" class="btn btn-secondary">VER SERVICIOS</a>
+      </div>
+      <div class="hero-info">
+        <span>● Atención personalizada</span>
+        <span>● Taller familiar</span>
+      </div>
+    </div>
+    <img class="hero-image"
+      src="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&w=1200&q=85"
+      alt="Taller de reparación de vehículos">
+  </section>
+
+  <section class="container section" id="servicios">
+    <div class="section-heading">
+      <span class="eyebrow">QUÉ HACEMOS</span>
+      <h2>Nuestros servicios</h2>
+      <p>Soluciones para el mantenimiento y reparación de tu vehículo.</p>
+    </div>
+
+    <div class="services-grid">
+      <article class="service-card">
+        <div class="service-icon">🔧</div>
+        <h3>Mecánica general</h3>
+        <p>Reparaciones y mantenimiento general del vehículo.</p>
+      </article>
+      <article class="service-card">
+        <div class="service-icon">⚡</div>
+        <h3>Electricidad</h3>
+        <p>Revisión de batería y componentes eléctricos.</p>
+      </article>
+      <article class="service-card">
+        <div class="service-icon">🚘</div>
+        <h3>Diagnóstico</h3>
+        <p>Detección de averías y revisión del vehículo.</p>
+      </article>
+      <article class="service-card">
+        <div class="service-icon">⭕</div>
+        <h3>Neumáticos</h3>
+        <p>Revisión, reparación y sustitución de neumáticos.</p>
+      </article>
+      <article class="service-card">
+        <div class="service-icon">🛑</div>
+        <h3>Frenos</h3>
+        <p>Comprobación y mantenimiento del sistema de frenado.</p>
+      </article>
+      <article class="service-card">
+        <div class="service-icon">❄️</div>
+        <h3>Aire acondicionado</h3>
+        <p>Revisión del sistema de climatización.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="container main-grid">
+    <section class="panel" id="reserva">
+      <span class="eyebrow">PIDE TU CITA</span>
+      <h2>Reserva tu visita</h2>
+      <p class="muted">Rellena los datos y comprobaremos la disponibilidad.</p>
+
+      <form id="booking-form">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="name">Nombre y apellidos *</label>
+            <input id="name" name="name" type="text" minlength="2" maxlength="100" required>
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Teléfono *</label>
+            <input id="phone" name="phone" type="tel"
+              placeholder="605075622" inputmode="numeric"
+              autocomplete="tel" maxlength="9" minlength="9"
+              pattern="[0-9]{9}"
+              title="Introduce exactamente 9 cifras" required>
+          </div>
+
+          <div class="form-group">
+            <label for="service">Servicio *</label>
+            <select id="service" name="service" required>
+              <option value="">Selecciona un servicio</option>
+              <option value="Mecánica general">Mecánica general</option>
+              <option value="Electricidad">Electricidad</option>
+              <option value="Diagnóstico">Diagnóstico</option>
+              <option value="Neumáticos">Neumáticos</option>
+              <option value="Frenos">Frenos</option>
+              <option value="Aire acondicionado">Aire acondicionado</option>
+              <option value="Otro">Otro</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="brand">Marca *</label>
+            <input id="brand" name="brand" type="text" maxlength="60" required>
+          </div>
+
+          <div class="form-group">
+            <label for="model">Modelo *</label>
+            <input id="model" name="model" type="text" maxlength="60" required>
+          </div>
+
+          <div class="form-group">
+            <label for="plate">Matrícula *</label>
+            <input id="plate" name="plate" type="text"
+              maxlength="15" placeholder="1234 ABC" required>
+          </div>
+
+          <div class="form-group">
+            <label for="date">Día de la cita *</label>
+            <input id="date" name="date" type="date" required>
+          </div>
+
+          <div class="form-group">
+            <label for="time">Hora disponible *</label>
+            <select id="time" name="time" required disabled>
+              <option value="">Selecciona primero una fecha</option>
+            </select>
+          </div>
+
+          <div class="form-group full">
+            <label for="description">Descripción del problema</label>
+            <textarea id="description" name="description"
+              maxlength="2000" placeholder="Explica qué le ocurre al coche..."></textarea>
+          </div>
+
+          <div class="form-group full">
+            <label for="observations">Observaciones adicionales</label>
+            <textarea id="observations" name="observations"
+              maxlength="1000" placeholder="Información adicional..."></textarea>
+          </div>
+        </div>
+
+        <p class="form-note">* Campos obligatorios. Horario: lunes a viernes, de 8:00 a 18:00.</p>
+        <button class="btn submit-btn" type="submit">SOLICITAR CITA</button>
+        <p id="booking-status" class="status" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <div class="side-column">
+      <section class="panel chat-panel" id="asistente">
+        <span class="eyebrow">ASISTENTE VIRTUAL</span>
+        <h2>Taller IA</h2>
+        <p class="muted">¿Tienes dudas? Cuéntanos qué le ocurre a tu coche.</p>
+
+        <div id="messages" class="chat-messages" aria-live="polite"></div>
+
+        <form id="chat-form" class="chat-form">
+          <input name="message" type="text" maxlength="2000"
+            placeholder="Escribe tu mensaje..." required>
+          <button class="btn" type="submit">Enviar</button>
+        </form>
+        <p id="chat-status" class="status" role="status"></p>
+      </section>
+
+      <section class="panel contact-panel" id="contacto">
+        <span class="eyebrow">ESTAMOS PARA AYUDARTE</span>
+        <h2>Contacto</h2>
+        <div class="contact-item">
+          <strong>Teléfono</strong>
+          <a href="tel:73543245">735 43 245</a>
+        </div>
+        <div class="contact-item">
+          <strong>Horario</strong>
+          <p>Lunes a viernes: 8:00 - 18:00</p>
+        </div>
+        <div class="contact-item">
+          <strong>Capacidad del taller</strong>
+          <p>Hasta 4 vehículos simultáneamente.</p>
+        </div>
+      </section>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <strong>TALLER VÁZQUEZ</strong>
+    <p>Elisabeth Vázquez Padilla y Paula López Benítez · SMX-2 B</p>
+    <p>© 2026 Taller Vázquez</p>
+    <a href="/gestion/">Acceso a gestión</a>
+  </div>
+</footer>
+
+</body>
+</html>
