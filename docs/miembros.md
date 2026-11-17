@@ -1,4 +1,6 @@
 ### Eli: Creación del documento, añadir el tema, creación del index
-![Foto de Vázquez Taller](img/fotoeli.png)
+<!-- ![Foto de Vázquez Taller](img/fotoeli.png) -->
+<img src="img/fotoeli.png" alt="Eli" width="100">
+
 ### Paula: Arreglar detalles del documento, dejarlo bonito
-![Foto de Vázquez Taller](img/fotopaula.png)
+<img src="img/fotopaula.png" alt="Paula" width="100">
