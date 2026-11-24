@@ -1,4 +1,7 @@
-
+# ESQUELETO F3/F6. El único servicio listo inicialmente es nginx.
+# Los otros servicios están en el perfil taller: activadlo al completar sus TODO.
+# docker compose up -d --build nginx
+# docker compose --profile taller up -d --build  (DESPUÉS de completar F3)
 services:
   nginx:
     build: ./nginx
@@ -6,91 +9,61 @@ services:
       - "${APP_PORT:-8085}:80"
     volumes:
       - ./frontend:/usr/share/nginx/html:ro
-      - ./nginx/.htpasswd:/etc/nginx/.htpasswd:ro
-    networks:
-      - publica
-      - privada
-    restart: unless-stopped
+      # TODO F3: montar .htpasswd en la ruta elegida de Nginx, en solo lectura.
+    networks: [publica, privada]
+    # TODO F3: decidir reinicio y dependencia del backend una vez conectado.
 
   backend:
-    profiles: ["taller"]
+    profiles: [taller]
     build: ./backend
     environment:
       PORT: 3000
       DB_HOST: mariadb
       DB_PORT: 3306
-      DB_NAME: ${DB_NAME:?Define DB_NAME en .env}
-      DB_USER: ${DB_USER:?Define DB_USER en .env}
-      DB_PASSWORD: ${DB_PASSWORD:?Define DB_PASSWORD en .env}
+      # TODO F3: pasar DB_NAME, DB_USER y DB_PASSWORD desde .env.
       GEMINI_API_KEY: ${GEMINI_API_KEY:-}
       GEMINI_MODEL: ${GEMINI_MODEL:-gemini-flash-lite-latest}
-      DEBUG_CHAT: ${DEBUG_CHAT:-false}
+      DEBUG_CHAT: ${DEBUG_CHAT:-true}
       TZ: Europe/Madrid
-    networks:
-      - publica
-      - privada
-    depends_on:
-      mariadb:
-        condition: service_healthy
-    restart: unless-stopped
+    # CORRECCIÓN PROPORCIONADA: privada llega a MariaDB; publica permite salir a Gemini.
+    # networks está al nivel de environment/healthcheck, nunca dentro de healthcheck.
+    # No publicar el puerto 3000 en el host.
+    networks: [publica, privada]
+    # TODO F3: healthcheck de /api/health y dependencia de MariaDB saludable.
 
   mariadb:
-    profiles: ["taller"]
+    profiles: [taller]
     image: mariadb:11.4
     environment:
       TZ: Europe/Madrid
-      MARIADB_DATABASE: ${DB_NAME:?Define DB_NAME en .env}
-      MARIADB_USER: ${DB_USER:?Define DB_USER en .env}
-      MARIADB_PASSWORD: ${DB_PASSWORD:?Define DB_PASSWORD en .env}
-      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:?Define DB_ROOT_PASSWORD en .env}
-    volumes:
-      - datos_mariadb:/var/lib/mysql
-      - ./database/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
-    networks:
-      - privada
-    healthcheck:
-      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 30s
-    restart: unless-stopped
+      # TODO F3: configurar MARIADB_DATABASE, MARIADB_USER,
+      # MARIADB_PASSWORD y MARIADB_ROOT_PASSWORD con las variables .env.
+    networks: [privada]
+    # TODO F3: volumen datos_mariadb en /var/lib/mysql.
+    # TODO F3: montar database/init.sql en /docker-entrypoint-initdb.d/01-init.sql:ro.
+    # TODO F3: healthcheck con healthcheck.sh --connect --innodb_initialized.
+    # No publicar el puerto 3306.
 
   phpmyadmin:
-    profiles: ["taller"]
+    profiles: [taller]
     image: phpmyadmin:5.2.2-apache
     environment:
       PMA_HOST: mariadb
-      PMA_PORT: 3306
-      PMA_ABSOLUTE_URI: ${PMA_ABSOLUTE_URI:-http://localhost:8085/phpmyadmin/}
-    networks:
-      - privada
-    depends_on:
-      mariadb:
-        condition: service_healthy
-    restart: unless-stopped
+      # TODO F3: PMA_ABSOLUTE_URI para acceso a través de /phpmyadmin/.
+    networks: [privada]
+    # TODO F3: dependencia y acceso restringido a través de Nginx.
+    # No publicar un puerto externo para saltarse esa protección.
 
   backup:
-    profiles: ["taller"]
+    profiles: [taller]
     image: mariadb:11.4
     command: ["sh", "/scripts/backup.sh"]
     environment:
       DB_HOST: mariadb
-      DB_PORT: 3306
-      DB_NAME: ${DB_NAME:?Define DB_NAME en .env}
-      DB_USER: ${DB_USER:?Define DB_USER en .env}
-      DB_PASSWORD: ${DB_PASSWORD:?Define DB_PASSWORD en .env}
-      BACKUP_INTERVAL_SECONDS: ${BACKUP_INTERVAL_SECONDS:-86400}
-      TZ: Europe/Madrid
-    volumes:
-      - ./scripts:/scripts:ro
-      - ./backups:/backups
-    networks:
-      - privada
-    depends_on:
-      mariadb:
-        condition: service_healthy
-    restart: unless-stopped
+      # TODO F6: DB_NAME, DB_USER, DB_PASSWORD, BACKUP_INTERVAL_SECONDS.
+    networks: [privada]
+    # TODO F6: montar scripts/ en /scripts:ro y backups/ en /backups.
+    # TODO F6: esperar a MariaDB saludable y decidir política de reinicio.
 
 volumes:
   datos_mariadb:
