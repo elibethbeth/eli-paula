@@ -6,3 +6,8 @@ theme:
 nav:
   - Inici: index.md
   - Miembros: miembros.md
+  - Contacte: contacte.md
+  - Serveis: els nostres_serveis.md
+  - Objectius: els nostres_objectius.md
+  - Web: funcionament_web.md
+  -Solucions: les nostres_solucions.md
